@@ -1,0 +1,17 @@
+@import "../../styleutils/variables.scss";
+
+.widget-item {
+  color: $main-color;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  transition: all 0.2s ease-in;
+
+  &:hover {
+    color: $secondary-color;
+    background-color: $hover-color;
+    border-radius: 10%;
+    cursor: pointer;
+  }
+}

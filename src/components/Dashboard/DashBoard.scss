@@ -4,12 +4,13 @@
   background-color: $secondary-background;
   width: 30%;
   height: 100vh;
-  border-top-right-radius: 2em;
-  border-bottom-right-radius: 2em;
+  border-top-right-radius: 2rem;
+  border-bottom-right-radius: 2rem;
   display: flex;
-  padding-block: 2em;
+  padding-block: 2rem;
   flex-direction: column;
   align-items: center;
+  max-width: 300px;
 
   &__heading {
     color: $secondary-color;
@@ -19,12 +20,23 @@
     width: 80%;
     display: flex;
     flex-direction: column;
-    margin-block: 3em;
-    gap: 1em;
+    margin-block: 3rem;
+    gap: 2rem;
   }
   
   &__item {
     color: $main-color;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    transition: all .2s ease-in;
+    border-radius: 10%;
 
+    &:hover {
+      color: $secondary-color;
+      background-color: $hover-color;
+      cursor: pointer;
+    }
   }
 }
