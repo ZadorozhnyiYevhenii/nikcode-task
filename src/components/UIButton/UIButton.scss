@@ -1,3 +1,12 @@
+@import "../../styleutils/variables.scss";
+
 .ui-button {
-  
+  background: $secondary-color;
+  color: $button-text;
+  height: 3rem;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 5rem;
+  max-width: 225px;
+  width: 100%;
 }

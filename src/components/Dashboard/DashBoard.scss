@@ -7,13 +7,13 @@
   border-top-right-radius: 2rem;
   border-bottom-right-radius: 2rem;
   display: flex;
-  padding-block: 2rem;
   flex-direction: column;
   align-items: center;
   max-width: 300px;
-
+  
   &__heading {
     color: $secondary-color;
+    margin-top: 2rem;
   }
 
   &__list {
@@ -22,21 +22,26 @@
     flex-direction: column;
     margin-block: 3rem;
     gap: 2rem;
+    overflow: auto;
   }
-  
-  &__item {
-    color: $main-color;
+
+  &__btn {
+    width: 100%;
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 1rem;
-    padding: 1rem;
-    transition: all .2s ease-in;
-    border-radius: 10%;
+    justify-content: center;
+    position: fixed;
+    bottom: 2em;
+  }
 
-    &:hover {
-      color: $secondary-color;
-      background-color: $hover-color;
-      cursor: pointer;
-    }
+  &__form {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 2em;
   }
 }

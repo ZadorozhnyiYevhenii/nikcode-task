@@ -1,27 +1,31 @@
 "use client";
 
 import { DragEvent, useState } from "react";
+import { UIButton } from "../UIButton/UIButton";
+import { FaChartPie } from "react-icons/fa";
 import { IWidget } from "@/types/IWidget";
 import { WidgetItem } from "../WidgetItem/WidgetItem";
-import { FaChartPie } from "react-icons/fa";
 import { IoStatsChart } from "react-icons/io5";
 import { PiChartDonutFill } from "react-icons/pi";
+import { NewWidgetForm } from "../NewWidgetForm/NewWidgetForm";
+import { getIcon } from "@/helpers/getWidgetIcon";
+import { sortWidgets } from "@/helpers/sortWidgets";
 import "./DashBoard.scss";
-import { UIButton } from "../UIButton/UIButton";
 
 export const DashBoard = () => {
   const [widgets, setWidgets] = useState<IWidget[]>([
-    { id: 1, title: "List", icon: <FaChartPie />, order: 1 },
-    { id: 2, title: "PiCharm", icon: <IoStatsChart />, order: 2 },
-    { id: 3, title: "TiCharm", icon: <PiChartDonutFill />, order: 3 },
+    { id: 1, title: "Pie Chart", icon: <FaChartPie />, order: 1 },
+    { id: 2, title: "Stats Chart", icon: <IoStatsChart />, order: 2 },
+    { id: 3, title: "Donut Chart", icon: <PiChartDonutFill />, order: 3 },
   ]);
 
   const [currentWidget, setCurrentWidget] = useState<IWidget>();
 
-  const dragStartHandler = (
-    e: DragEvent<HTMLLIElement>,
-    widget: IWidget
-  ): void => {
+  const [showForm, setShowForm] = useState(false);
+  const [widgetType, setWidgetType] = useState("");
+  const [widgetName, setWidgetName] = useState("");
+
+  const dragStartHandler = (widget: IWidget): void => {
     setCurrentWidget(widget);
   };
 
@@ -51,27 +55,38 @@ export const DashBoard = () => {
     );
   };
 
-  const sortWidgets = (widget1: IWidget, widget2: IWidget) => {
-    if (widget1.order > widget2.order) {
-      return 1;
-    } else {
-      return -1;
-    }
+  const addNewWidget = () => {
+    setShowForm((prev) => !prev);
   };
 
-  const addNewWidget = () => {
-    const newWidget: IWidget = { id: Date.now(), title: "New Widget", icon: <PiChartDonutFill />, order: widgets.length + 1 };
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (widgetName.trim().length < 3 || !widgetType) {
+      return;
+    }
+
+    const newWidget: IWidget = {
+      id: Date.now(),
+      title: widgetName,
+      icon: getIcon(widgetType),
+      order: widgets.length + 1,
+    };
     setWidgets([...widgets, newWidget]);
-  }
+    setShowForm(false);
+    setWidgetName("");
+    setWidgetType("");
+  };
 
   return (
     <nav className="sidebar">
       <h1 className="sidebar__heading">Dashboard</h1>
+
       <ul className="sidebar__list">
         {widgets.sort(sortWidgets).map((widget) => (
           <li
             key={widget.id}
-            onDragStart={(e) => dragStartHandler(e, widget)}
+            onDragStart={() => dragStartHandler(widget)}
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, widget)}
             draggable={true}
@@ -80,7 +95,24 @@ export const DashBoard = () => {
           </li>
         ))}
       </ul>
-      <UIButton onClickButton={addNewWidget}>Click</UIButton>
+
+      {!showForm && (
+        <div className="sidebar__btn">
+          <UIButton onClickButton={addNewWidget}>Add your widget</UIButton>
+        </div>
+      )}
+
+      {showForm && (
+        <div className="sidebar__form">
+          <NewWidgetForm
+            widgetName={widgetName}
+            widgetType={widgetType}
+            handleSubmit={handleSubmit}
+            setWidgetName={setWidgetName}
+            setWidgetType={setWidgetType}
+          />
+        </div>
+      )}
     </nav>
   );
 };

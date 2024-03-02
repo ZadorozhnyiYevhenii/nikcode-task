@@ -4,12 +4,14 @@ import './UIButton.scss';
 export const UIButton = ({
   children,
   onClickButton,
+  type = "button"
 }: {
   children: React.ReactNode;
-  onClickButton: () => void;
+  onClickButton?: () => void;
+  type?: "submit" | "reset" | "button" | undefined;
 }) => {
   return (
-    <button onClick={onClickButton} type="button" className="ui-button">
+    <button onClick={onClickButton} type={type} className="ui-button">
       {children}
     </button>
   );
