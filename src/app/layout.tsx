@@ -1,9 +1,13 @@
 import type { Metadata } from "next";
-import { DashBoard } from '../components/Dashboard/DashBoard';
-import { Inter } from "next/font/google";
+import { DashBoard } from '@/components/Dashboard/DashBoard';
+import { Roboto } from "next/font/google";
 import "./globals.scss";
 
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Roboto({
+  subsets: ['latin'],
+  variable: '--roboto-font',
+  weight: ['400', '700']
+});
 
 export const metadata: Metadata = {
   title: "NikCode",
@@ -17,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={roboto.className}>
         <DashBoard />
         {children}
       </body>
