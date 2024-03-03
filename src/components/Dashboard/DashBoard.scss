@@ -43,7 +43,7 @@
     justify-content: center;
     position: fixed;
     bottom: -80%;
-    transition: bottom 0.3s ease;
+    transition: bottom 0.3s ease-in;
 
     &--visible {
       bottom: 2em;
@@ -57,7 +57,7 @@
     justify-content: center;
     position: fixed;
     bottom: -80%;
-    transition: bottom 0.3s ease;
+    transition: bottom 0.3s ease-in;
 
     &--visible {
       bottom: 2em;
