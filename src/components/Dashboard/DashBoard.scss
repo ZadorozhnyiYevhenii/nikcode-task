@@ -1,4 +1,5 @@
 @import "../../styleutils/variables.scss";
+@import "../../styleutils/breakPoints.scss";
 
 .sidebar {
   background-color: $secondary-background;
@@ -10,7 +11,11 @@
   flex-direction: column;
   align-items: center;
   max-width: 300px;
-  
+
+  @include onTablet {
+    width: 50%;
+  }
+
   &__heading {
     color: $secondary-color;
     margin-top: 2rem;
@@ -20,28 +25,42 @@
     width: 80%;
     display: flex;
     flex-direction: column;
-    margin-block: 3rem;
+    margin-top: 3rem;
+    margin-bottom: 6rem;
     gap: 2rem;
     overflow: auto;
   }
 
-  &__btn {
+  &__item {
     width: 100%;
+  }
+
+  &__btn {
+    width: 40%;
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 2em;
+    bottom: -80%;
+    transition: bottom 0.3s ease;
+
+    &--visible {
+      bottom: 2em;
+    }
   }
 
   &__form {
     width: 100%;
-    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     position: fixed;
-    bottom: 2em;
+    bottom: -80%;
+    transition: bottom 0.3s ease;
+
+    &--visible {
+      bottom: 2em;
+    }
   }
 }

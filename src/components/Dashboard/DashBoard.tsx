@@ -1,6 +1,7 @@
 "use client";
 
 import { DragEvent, useState } from "react";
+import cn from "classnames";
 import { UIButton } from "../UIButton/UIButton";
 import { FaChartPie } from "react-icons/fa";
 import { IWidget } from "@/types/IWidget";
@@ -25,20 +26,22 @@ export const DashBoard = () => {
   const [widgetType, setWidgetType] = useState("");
   const [widgetName, setWidgetName] = useState("");
 
+  const [isDragging, setIsDragging] = useState(false);
+
   const dragStartHandler = (widget: IWidget): void => {
     setCurrentWidget(widget);
+    setIsDragging(true);
   };
 
   const dragOverHandler = (e: DragEvent<HTMLLIElement>): void => {
     e.preventDefault();
+    setIsDragging(false);
   };
 
   const dropHandler = (e: DragEvent<HTMLLIElement>, widget: IWidget): void => {
     e.preventDefault();
     setWidgets(
       widgets.map((item) => {
-        console.log(item.order, "drop");
-
         if (item.id === widget.id) {
           return {
             ...item,
@@ -78,6 +81,11 @@ export const DashBoard = () => {
     setWidgetType("");
   };
 
+  const handleDeleteWidget = (widget: IWidget) => {
+    const updatedWidgets = widgets.filter((item) => item.id !== widget.id);
+    setWidgets(updatedWidgets);
+  };
+
   return (
     <nav className="sidebar">
       <h1 className="sidebar__heading">Dashboard</h1>
@@ -90,29 +98,37 @@ export const DashBoard = () => {
             onDragOver={(e) => dragOverHandler(e)}
             onDrop={(e) => dropHandler(e, widget)}
             draggable={true}
+            className="sidebar__item"
           >
-            <WidgetItem widget={widget} />
+            <WidgetItem
+              widget={widget}
+              handleDeleteWidget={() => handleDeleteWidget(widget)}
+              isDragging={isDragging}
+            />
           </li>
         ))}
       </ul>
 
-      {!showForm && (
-        <div className="sidebar__btn">
-          <UIButton onClickButton={addNewWidget}>Add your widget</UIButton>
-        </div>
-      )}
+      <div
+        className={cn("sidebar__btn", { "sidebar__btn--visible": !showForm })}
+      >
+        <UIButton onClickButton={addNewWidget}>Add your widget</UIButton>
+      </div>
 
-      {showForm && (
-        <div className="sidebar__form">
-          <NewWidgetForm
-            widgetName={widgetName}
-            widgetType={widgetType}
-            handleSubmit={handleSubmit}
-            setWidgetName={setWidgetName}
-            setWidgetType={setWidgetType}
-          />
-        </div>
-      )}
+      <div
+        className={cn("sidebar__form", {
+          "sidebar__form--visible": showForm,
+        })}
+      >
+        <NewWidgetForm
+          widgetName={widgetName}
+          widgetType={widgetType}
+          handleSubmit={handleSubmit}
+          setWidgetName={setWidgetName}
+          setWidgetType={setWidgetType}
+          onClose={() => setShowForm(false)}
+        />
+      </div>
     </nav>
   );
 };

@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { DashBoard } from '@/components/Dashboard/DashBoard';
+import { DashBoard } from "@/components/Dashboard/DashBoard";
 import { Roboto } from "next/font/google";
 import "./globals.scss";
 
 const roboto = Roboto({
-  subsets: ['latin'],
-  variable: '--roboto-font',
-  weight: ['400', '700']
+  subsets: ["latin"],
+  variable: "--roboto-font",
+  weight: ["400", "700"],
 });
 
 export const metadata: Metadata = {
